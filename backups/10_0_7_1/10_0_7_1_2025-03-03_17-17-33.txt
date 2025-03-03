@@ -1,0 +1,109 @@
+Building configuration...
+
+Current configuration : 1241 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname RTR2
+!
+boot-start-marker
+boot-end-marker
+!
+enable password admin
+!
+no aaa new-model
+memory-size iomem 5
+ip cef
+!
+!
+!
+!
+ip domain name example.com
+ip auth-proxy max-nodata-conns 3
+ip admission max-nodata-conns 3
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin password 0 admin
+!
+!
+ip ssh version 2
+! 
+!
+!
+!
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.0
+!
+interface Loopback1
+ no ip address
+!
+interface FastEthernet0/0
+ ip address 10.0.7.1 255.255.255.252
+ speed auto
+ half-duplex
+!
+interface FastEthernet0/1
+ ip address 10.0.7.10 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ ip address 192.168.8.130 255.255.255.0
+ duplex auto
+ speed auto
+!
+router ospf 1
+ log-adjacency-changes
+ network 10.0.7.0 0.0.0.3 area 0
+ network 10.0.7.8 0.0.0.3 area 0
+ network 192.168.8.0 0.0.0.255 area 0
+ network 192.168.65.0 0.0.0.255 area 0
+ network 192.168.255.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+end
